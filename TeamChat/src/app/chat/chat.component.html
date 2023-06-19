@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+  <head>
+    <title>Chat App Template</title>
+  </head>
+  <body>
+    <br>
+    <header>
+      <img src="assets/images/applogo.png" style="height: 40px;width: 60px;" alt="">
+      <h1>Team Chat</h1>
+      <nav>
+        <ul>
+          <li><a (click)="getCheckedEmployee(employee.id)"  onclick="dialog4.showModal()">{{employee.firstname}}&nbsp;{{employee.lastname}}</a></li>
+          
+          <li><a (click)="logout()">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+      <br>
+      
+    <div class="chat-container">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col col-3">
+            <div class="sidebar">
+              
+              <h3 ><b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Team members</b> </h3>
+              ------------------------------------------
+              <ul *ngFor="let e of teammates">
+                <li><a (click)="getCheckedEmployee(e.id)"  onclick="dialog3.showModal()"><b>{{e.firstname}} &nbsp; {{e.lastname}}</b></a></li>
+                
+              </ul>
+            </div>
+        </div>
+        <div class="col col-2"></div>
+        <div class="col col-7">
+          <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;welcome to {{team.name}}</h3>
+          <div class="right-panel">
+           
+            <div class="chat-box" id="chat-box">
+              <div *ngFor="let m of messages">
+              
+                <div class="message sent " *ngIf="m.senderId===employee.id">
+                  <div class="message-body">
+                    <p class="message-text">{{m.content}}</p>
+                  </div>
+                  <div class="message-header">
+                   
+                    
+                    <span class="sent-time">{{m.sentAt.getTime()|date:"shortDate"}}<br> {{m.sentAt.getTime()|date:"shortTime"}}</span>
+                    <h3 class="sender-name">{{m.senderName}}</h3>
+                    <img src={{employee.imageUrl}} alt="Avatar" class="avatar">
+                  </div>
+                  
+                </div>
+              <div class="message received " *ngIf="m.senderId!==employee.id">
+                
+                <div class="message-header">
+                  <img src="assets/images/applogo.png" alt="Avatar" class="avatar">
+                  <h3 class="sender-name">{{m.senderName}}</h3>
+                  <span class="sent-time">{{m.sentAt.getTime()|date:"shortDate"}}<br> {{m.sentAt.getTime()|date:"shortTime"}}</span>
+                </div>
+                <div class="message-body">
+                  <p class="message-text">{{m.content}}</p>
+                </div>
+              </div>
+              
+            </div>
+            </div>
+            <form id="message-form" #addForm="ngForm" (ngSubmit)="sendMessage(addForm)">
+              <input type="text" id="content" name="content" placeholder="Type your message..." [(ngModel)]="message.content">
+              <button type="submit">Send</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+      
+      </div>
+      
+    </div>
+    <footer>
+      
+       <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&copy; 2023 Team Chat Application. All rights reserved.</p>
+    </footer>
+    <!--dialog box employee details-->
+    <dialog class="ct1" id="dialog3">
+      <div  class="container mt-4 mb-4 p-3 d-flex justify-content-center"> 
+        <div class="card1 p-4"> 
+          <div class=" image d-flex flex-column justify-content-center align-items-center"> 
+            <button class="btnt btn-secondary"> <img src={{checkedEmployee.imageUrl}} height="100" width="100" /></button> 
+          <b class="name mt-3">{{checkedEmployee.firstname}}&nbsp; {{checkedEmployee.lastname}}</b> 
+            <b class="name mt-3">JobTitle : &nbsp;{{checkedEmployee.jobTitle}}</b> 
+            <b class="name mt-3">Team : &nbsp;{{checkedEmployee.team}}</b> 
+            <b class="name mt-3">Phone :&nbsp;{{checkedEmployee.phone}}</b> <br>
+            
+              
+          
+           <input class="btn btn-success form-control-lg " (click)="a()" style="border-radius: 20px;" type="submit" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; close&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+         
+            
+              </div> 
+            </div>
+      </div>
+    
+    </dialog>
+    <!--dialog box edit my password -->
+    <dialog class="ct1" id="dialog4">
+      <div  class="container mt-4 mb-4 p-3 d-flex justify-content-center"> 
+        <div class="card1 p-4"> 
+          <div class=" image d-flex flex-column justify-content-center align-items-center"> 
+            <button class="btnt btn-secondary"> <img src={{checkedEmployee.imageUrl}} height="100" width="100" /></button> 
+            <b>{{employee.firstname}}</b><b>{{employee.lastname}}</b>
+            <form #addForm3="ngForm"  >
+              <input id="password" class="form-control form-control-lg" style="border-radius: 15px;" type="password" name="password"  required size="30" placeholder="Password" /><br> <br>
+              <input id="password" class="form-control form-control-lg" style="border-radius: 15px;" type="password" name="password"  required size="30" placeholder="Password" /><br>
+          </form>
+            
+              
+          
+           <input class="btn btn-success form-control-lg " (click)="a()" style="border-radius: 20px;" type="submit" value="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; close&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;">
+         
+            
+              </div> 
+            </div>
+      </div>
+    
+    </dialog>
+  </body>
+</html>
